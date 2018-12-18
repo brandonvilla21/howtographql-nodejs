@@ -1,5 +1,9 @@
 const { GraphQLServer } = require('graphql-yoga')
-const links = require('./dummy-data')
+let links =  [{
+  id: 'link-0',
+  url: 'www.howtographql.com',
+  description: 'Fullstack tutorial for GraphQL'
+}]
 
 let idCount = links.length
 
@@ -7,10 +11,12 @@ let idCount = links.length
 const resolvers = {
   Query: {
     info: () => 'Resolver for info',
-    feed: () => links
+    feed: () => links,
+    link: (parent, args) => links.find(e => e.id === args.id)
   },
   Mutation: {
     post: (parent, args) => {
+      console.log(args)
       const link = {
         id: `link-${idCount++}`,
         description: args.description,
@@ -18,6 +24,24 @@ const resolvers = {
       }
       links.push(link)
       return link
+    },
+    updateLink: (parent, args) => {
+      const index = links.findIndex(e => e.id === args.id)
+      links[index] = {
+        ...links[index],
+        ...args
+      }
+      return links[index]
+    },
+    deleteLink: (parent, args) => {
+      const index = links.findIndex(e => e.id === args.id)
+      const nextLinks = [
+        ...links.slice(0, index),
+        ...links.slice(index + 1)
+      ]
+      const returnLink = links[index]
+      links = nextLinks
+      return returnLink
     }
   },
   
