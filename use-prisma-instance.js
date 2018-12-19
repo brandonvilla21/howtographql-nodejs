@@ -1,4 +1,4 @@
-const { prisma } = require('./generated/prisma-client')
+const { prisma } = require('./src/generated/prisma-client')
 
 async function main() {
   // Create a new Link
