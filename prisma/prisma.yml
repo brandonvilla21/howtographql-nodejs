@@ -1,5 +1,6 @@
 # The HTTP endpoint for Prisma API
-#endpoint: ''endpoint: https://eu1.prisma.sh/brandon-5337f4/prisma/dev
+#endpoint: ''
+endpoint: https://eu1.prisma.sh/brandon-5337f4/prisma/dev
 
 
 # Points to the file that contains your datamodel
@@ -9,3 +10,7 @@ datamodel: datamodel.prisma
 generate:
   - generator: javascript-client
     output: ../src/generated/prisma-client
+
+hooks:
+  post-deploy:
+    - prisma generate
