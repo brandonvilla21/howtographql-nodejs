@@ -19,7 +19,7 @@ const server = new GraphQLServer({
   resolvers,
   context: request => ({
     ...request,
-    primsa
+    prisma
   })
 })
 
